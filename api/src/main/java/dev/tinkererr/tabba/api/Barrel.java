@@ -7,7 +7,7 @@ import java.math.BigInteger;
 /**
  * This class represents barrels which hold a large quantity of one item type.
  */
-public class Barrel {
+public abstract class Barrel {
 
     private Material material;
     private BigInteger amount;
@@ -82,7 +82,7 @@ public class Barrel {
         }
         BigInteger maximum = this.tier.getCapacity();
         BigInteger space = maximum.subtract(this.amount);
-        if(space.signum() != 1) {
+        if (space.signum() != 1) {
             return amount;
         } else {
             this.amount = this.amount.add(amount);
@@ -90,6 +90,27 @@ public class Barrel {
             BigInteger result = this.amount.subtract(temp);
             this.amount = temp;
             return result;
+        }
+    }
+
+    /**
+     * Removes a quantity from this barrel. This method will attempt to remove as many of the specified amount as possible
+     * until the barrel is empty, and return the amount that it managed to remove.
+     *
+     * @param amount The amount of items to take from this barrel.
+     * @return The actual amount that was taken from this barrel (factoring in how many could be taken).
+     */
+    public BigInteger takeItems(BigInteger amount) {
+        if(amount.signum() != 1) {
+            throw new IllegalArgumentException("Amount must be greater than 0!");
+        }
+        if(amount.compareTo(this.amount) >= 0) {
+            BigInteger temp = this.amount;
+            this.amount = BigInteger.ZERO;
+            return temp;
+        } else {
+            this.amount = this.amount.subtract(amount);
+            return amount;
         }
     }
 
