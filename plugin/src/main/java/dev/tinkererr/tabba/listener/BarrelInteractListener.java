@@ -35,12 +35,12 @@ public class BarrelInteractListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.BARREL) {
             this.plugin.getBarrelProvider().getBarrel(event.getClickedBlock().getLocation()).ifPresent(barrel -> {
-                event.setUseInteractedBlock(Event.Result.DENY);
-                event.setUseItemInHand(Event.Result.DENY);
-
                 boolean sneaking = event.getPlayer().isSneaking();
                 switch (event.getAction()) {
                     case RIGHT_CLICK_BLOCK:
+                        event.setUseInteractedBlock(Event.Result.DENY);
+                        event.setUseItemInHand(Event.Result.DENY);
+
                         ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
                         if(heldItem.hasItemMeta()) {
                             return;
@@ -56,13 +56,17 @@ public class BarrelInteractListener implements Listener {
                         }
                         break;
                     case LEFT_CLICK_BLOCK:
-                        if(barrel.getMaterial() != null) {
-                            Material cachedMaterial = barrel.getMaterial();
-                            BigInteger amountToTake = new BigInteger(sneaking ? "64" : "1");
-                            BigInteger amountTaken = barrel.takeItems(amountToTake);
-                            this.plugin.getBarrelProvider().saveBarrel(barrel);
-                            event.getPlayer().getInventory().addItem(new ItemStack(cachedMaterial,
-                                    amountTaken.intValueExact()));
+                        if(!barrel.getAmount().equals(BigInteger.ZERO)) {
+                            event.setUseInteractedBlock(Event.Result.DENY);
+                            event.setUseItemInHand(Event.Result.DENY);
+                            if(barrel.getMaterial() != null) {
+                                Material cachedMaterial = barrel.getMaterial();
+                                BigInteger amountToTake = new BigInteger(sneaking ? "64" : "1");
+                                BigInteger amountTaken = barrel.takeItems(amountToTake);
+                                this.plugin.getBarrelProvider().saveBarrel(barrel);
+                                event.getPlayer().getInventory().addItem(new ItemStack(cachedMaterial,
+                                        amountTaken.intValueExact()));
+                            }
                         }
                         break;
                     default:
