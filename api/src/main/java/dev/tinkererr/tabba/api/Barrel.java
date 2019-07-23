@@ -168,18 +168,21 @@ public abstract class Barrel {
      *
      * @return The barrel's HUD text.
      */
-    public BaseComponent[] getHUDText() {
+    public BaseComponent[] getHUDText(boolean detailed) {
         return new ComponentBuilder("|| ")
                 .append("Tier: ")
                 .append(TextComponent.fromLegacyText(this.tier.getFormattedName()))
                 .append(" || ")
                 .append("Item: ")
-                .append(this.amount.equals(BigInteger.ZERO) ? "" : this.amount + "x ")
+                .append(detailed ? (this.amount.equals(BigInteger.ZERO) ? "" : this.amount.toString())
+                        : this.amount.divide(new BigInteger("64")) + "x64")
+                .append(" ")
                 .append(this.material == null ? "None" :
                         WordUtils.capitalize(this.material.name().toLowerCase().replaceAll("_", " ")))
                 .append(" || ")
                 .append("Capacity: ")
-                .append(this.tier.getCapacity() == null ? "Unlimited" : this.tier.getCapacity().toString())
+                .append(this.tier.getCapacity() == null ? "Unlimited" : (detailed ? this.tier.getCapacity().toString()
+                        : this.tier.getCapacity().divide(new BigInteger("64")) + "x64"))
                 .append(" ||")
                 .create();
     }

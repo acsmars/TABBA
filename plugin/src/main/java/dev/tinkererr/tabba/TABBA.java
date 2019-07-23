@@ -47,7 +47,7 @@ public class TABBA extends JavaPlugin {
                     Block target = player.getTargetBlockExact(5);
                     if (target != null && target.getType() == Material.BARREL) {
                         TABBA.this.barrelProvider.getBarrel(target.getLocation()).ifPresent(barrel ->
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, barrel.getHUDText())
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, barrel.getHUDText(player.isSneaking()))
                         );
                     }
                 }
