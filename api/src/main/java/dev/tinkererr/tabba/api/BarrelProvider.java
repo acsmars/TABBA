@@ -16,4 +16,12 @@ public interface BarrelProvider {
      * @return The barrel, if found at the location specified.
      */
     Optional<Barrel> getBarrel(Location location);
+
+    /**
+     * Saves a {@link Barrel}'s data.
+     *
+     * @param barrel The barrel to save.
+     * @return True if the barrel's data is saved successfully, otherwise false.
+     */
+    boolean saveBarrel(Barrel barrel);
 }
