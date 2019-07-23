@@ -5,9 +5,14 @@ import dev.tinkererr.tabba.api.BarrelProvider;
 import dev.tinkererr.tabba.implemented.AnvilBarrelProvider;
 import dev.tinkererr.tabba.listener.BarrelInteractListener;
 import dev.tinkererr.tabba.listener.BarrelPlaceListener;
+import net.md_5.bungee.api.ChatMessageType;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * Represents the main plugin class for TABBA.
@@ -34,6 +39,20 @@ public class TABBA extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new BarrelPlaceListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BarrelInteractListener(this), this);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : TABBA.this.getServer().getOnlinePlayers()) {
+                    Block target = player.getTargetBlockExact(5);
+                    if (target != null && target.getType() == Material.BARREL) {
+                        TABBA.this.barrelProvider.getBarrel(target.getLocation()).ifPresent(barrel ->
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, barrel.getHUDText())
+                        );
+                    }
+                }
+            }
+        }.runTaskTimer(this, 0L, 20L);
     }
 
     private boolean setupAnvil() {

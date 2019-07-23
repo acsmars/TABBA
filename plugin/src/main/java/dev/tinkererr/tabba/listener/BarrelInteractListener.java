@@ -1,7 +1,6 @@
 package dev.tinkererr.tabba.listener;
 
 import dev.tinkererr.tabba.TABBA;
-import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -35,7 +34,6 @@ public class BarrelInteractListener implements Listener {
             this.plugin.getBarrelProvider().getBarrel(event.getClickedBlock().getLocation()).ifPresent(barrel -> {
                 event.setUseInteractedBlock(Event.Result.DENY);
                 event.setUseItemInHand(Event.Result.DENY);
-                event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, barrel.getHUDText());
             });
         }
     }
