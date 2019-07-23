@@ -1,5 +1,7 @@
 package dev.tinkererr.tabba.api;
 
+import net.md_5.bungee.api.ChatColor;
+
 import java.math.BigInteger;
 
 /**
@@ -11,33 +13,35 @@ public enum BarrelTier {
      * The nether star tier is the last tier of {@link Barrel} and can store an unlimited amount of one item. The actual
      * maximum capacity is limited to the maximum size of a {@link java.math.BigInteger}.
      */
-    NETHER_STAR(5, null, null),
+    NETHER_STAR(5, "&cNether Star", null, null),
     /**
      * The diamond tier is the fourth tier of {@link Barrel} and can store 16777216 of one item (128x as many as
      * {@link BarrelTier#GOLD}).
      */
-    DIAMOND(4, new BigInteger("16777216"), NETHER_STAR),
+    DIAMOND(4, "&bDiamond", new BigInteger("16777216"), NETHER_STAR),
     /**
      * The gold tier is the third tier of {@link Barrel} and can store 131072 of one item (8x as many as
      * {@link BarrelTier#IRON}).
      */
-    GOLD(3, new BigInteger("131072"), DIAMOND),
+    GOLD(3, "&6Golden", new BigInteger("131072"), DIAMOND),
     /**
      * The iron tier is the second tier of {@link Barrel} and can store 16384 of one item (4x as many as
      * {@link BarrelTier#WOOD}).
      */
-    IRON(2, new BigInteger("16384"), GOLD),
+    IRON(2, "&7Iron", new BigInteger("16384"), GOLD),
     /**
      * The wood tier is the lowest tier {@link Barrel} and can store 4096 of one item.
      */
-    WOOD(1, new BigInteger("4096"), IRON);
+    WOOD(1, "&6Wooden", new BigInteger("4096"), IRON);
 
     private final int id;
+    private final String formattedName;
     private final BigInteger capacity;
     private final BarrelTier nextTier;
 
-    BarrelTier(int id, BigInteger capacity, BarrelTier nextTier) {
+    BarrelTier(int id, String formattedName, BigInteger capacity, BarrelTier nextTier) {
         this.id = id;
+        this.formattedName = formattedName;
         this.capacity = capacity;
         this.nextTier = nextTier;
     }
@@ -49,6 +53,15 @@ public enum BarrelTier {
      */
     public int getId() {
         return this.id;
+    }
+
+    /**
+     * Returns the name of this tier with formatted color codes.
+     *
+     * @return The formatted name for this tier.
+     */
+    public String getFormattedName() {
+        return ChatColor.translateAlternateColorCodes('&', this.formattedName);
     }
 
     /**
