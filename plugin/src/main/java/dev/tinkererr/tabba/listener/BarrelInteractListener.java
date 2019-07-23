@@ -49,7 +49,7 @@ public class BarrelInteractListener implements Listener {
                                 .append("Item: ")
                                 .append(barrel.getAmount().equals(BigInteger.ZERO) ? "" : barrel.getAmount() + "x ")
                                 .append(barrel.getMaterial() == null ? "None" :
-                                        WordUtils.capitalize(barrel.getMaterial().name().replaceAll("_", " ")))
+                                        WordUtils.capitalize(barrel.getMaterial().name().toLowerCase().replaceAll("_", " ")))
                                 .append(" || ")
                                 .append("Capacity: ")
                                 .append(barrel.getTier().getCapacity() == null ? "Unlimited" : barrel.getTier().getCapacity().toString())
