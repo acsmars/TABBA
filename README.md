@@ -31,10 +31,11 @@ The following instructions should get your server setup with TABBA in no time!
 
 You will need the following to use TABBA on your server:
 - **A working Minecraft server running Spigot 1.14.x.** We support (and actively recommend) [PaperMC](https://papermc.io) in place of Spigot!
+- **A copy of [Anvil](https://github.com/lukecarr/Anvil).** This is an API that TABBA requires to function.
 
 *TABBA does not work with any Minecraft version prior to 1.14. The plugin utilises the barrel block that was introduced with 1.14 therefore there is no chance of a future release with legacy Minecraft version support.*
 
-That's it! TABBA has been designed from the start to require no external dependencies and work out of the box!
+That's it! TABBA has been designed from the start to require no other external dependencies and work out of the box!
 
 ### Installation
 
