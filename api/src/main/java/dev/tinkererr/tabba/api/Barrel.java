@@ -1,5 +1,9 @@
 package dev.tinkererr.tabba.api;
 
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -99,6 +103,9 @@ public abstract class Barrel {
         BigInteger space = maximum.subtract(this.amount);
         if (space.signum() != 1) {
             return amount;
+        } else if(this.tier.getCapacity() == null) {
+            this.amount = this.amount.add(amount);
+            return BigInteger.ZERO;
         } else {
             this.amount = this.amount.add(amount);
             BigInteger temp = this.amount.min(this.tier.getCapacity());
@@ -142,4 +149,26 @@ public abstract class Barrel {
             return true;
         }
     }
+
+    /**
+     * Returns the HUD text that should be displayed when a player looks at this barrel.
+     *
+     * @return The barrel's HUD text.
+     */
+    public BaseComponent[] getHUDText() {
+        return new ComponentBuilder("|| ")
+                .append("Tier: ")
+                .append(TextComponent.fromLegacyText(this.tier.getFormattedName()))
+                .append(" || ")
+                .append("Item: ")
+                .append(this.amount.equals(BigInteger.ZERO) ? "" : this.amount + "x ")
+                .append(this.material == null ? "None" :
+                        WordUtils.capitalize(this.material.name().toLowerCase().replaceAll("_", " ")))
+                .append(" || ")
+                .append("Capacity: ")
+                .append(this.tier.getCapacity() == null ? "Unlimited" : this.tier.getCapacity().toString())
+                .append(" ||")
+                .create();
+    }
+
 }
