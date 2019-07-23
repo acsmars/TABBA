@@ -3,7 +3,7 @@ package dev.tinkererr.tabba;
 import dev.tinkererr.anvil.api.meta.BlockMetaProvider;
 import dev.tinkererr.tabba.api.BarrelProvider;
 import dev.tinkererr.tabba.implemented.AnvilBarrelProvider;
-import org.bukkit.event.Listener;
+import dev.tinkererr.tabba.listener.BarrelPlaceListener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Represents the main plugin class for TABBA.
  */
-public class TABBA extends JavaPlugin implements Listener {
+public class TABBA extends JavaPlugin {
 
     private BlockMetaProvider blockMeta;
     private AnvilBarrelProvider barrelProvider;
@@ -31,7 +31,7 @@ public class TABBA extends JavaPlugin implements Listener {
         this.getServer().getServicesManager().register(BarrelProvider.class, this.barrelProvider, this,
                 ServicePriority.Normal);
 
-        this.getServer().getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(new BarrelPlaceListener(this), this);
     }
 
     private boolean setupAnvil() {
