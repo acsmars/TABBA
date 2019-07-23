@@ -5,6 +5,7 @@ import dev.tinkererr.tabba.api.BarrelProvider;
 import dev.tinkererr.tabba.implemented.AnvilBarrelProvider;
 import dev.tinkererr.tabba.listener.BarrelInteractListener;
 import dev.tinkererr.tabba.listener.BarrelPlaceListener;
+import dev.tinkererr.tabba.listener.HopperListener;
 import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -39,6 +40,7 @@ public class TABBA extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new BarrelPlaceListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BarrelInteractListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new HopperListener(this), this);
 
         new BukkitRunnable() {
             @Override
