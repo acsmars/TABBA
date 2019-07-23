@@ -1,0 +1,6 @@
+name: TABBA
+main: dev.tinkererr.tabba.TABBA
+version: ${parent.version}
+api-version: 1.14
+depend:
+  - Anvil
