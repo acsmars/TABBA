@@ -61,7 +61,7 @@ public enum BarrelTier {
      * @return The formatted name for this tier.
      */
     public String getFormattedName() {
-        return ChatColor.translateAlternateColorCodes('&', this.formattedName);
+        return ChatColor.translateAlternateColorCodes('&', this.formattedName) + ChatColor.RESET;
     }
 
     /**
