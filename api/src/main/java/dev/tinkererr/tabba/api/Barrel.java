@@ -89,30 +89,38 @@ public abstract class Barrel {
     }
 
     /**
+     * Sets the material of the item stored in the barrel.
+     *
+     * @param material The barrel item's material.
+     */
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    /**
      * Adds a quantity to this barrel. This method will attempt to add as much of the specified amount as possible until
-     * the barrel is full, and return any remainder that was unable to fit in the barrel.
+     * the barrel is full, and return how many items were actually added.
      *
      * @param amount The amount of item to add to this barrel.
-     * @return Any remainder left over from the addition if the barrel exceeded maximum capacity.
+     * @return The actual number of items that were added (factoring barrel capacity).
      */
     public BigInteger addItems(BigInteger amount) {
         if (amount.signum() != 1) {
             throw new IllegalArgumentException("Amount must be greater than 0!");
         }
         BigInteger maximum = this.tier.getCapacity();
-        BigInteger space = maximum.subtract(this.amount);
-        if (space.signum() != 1) {
+        if (maximum == null) {
+            this.amount = this.amount.add(amount);
             return amount;
-        } else if(this.tier.getCapacity() == null) {
-            this.amount = this.amount.add(amount);
-            return BigInteger.ZERO;
-        } else {
-            this.amount = this.amount.add(amount);
-            BigInteger temp = this.amount.min(this.tier.getCapacity());
-            BigInteger result = this.amount.subtract(temp);
-            this.amount = temp;
-            return result;
         }
+        if(this.amount.add(amount).compareTo(this.tier.getCapacity()) < 0) {
+            this.amount = this.amount.add(amount);
+            return amount;
+        }
+        BigInteger temp = this.amount.add(amount);
+        BigInteger added = amount.subtract(temp.subtract(this.tier.getCapacity()).abs());
+        this.amount = temp.min(this.tier.getCapacity());
+        return amount;
     }
 
     /**
@@ -126,14 +134,19 @@ public abstract class Barrel {
         if (amount.signum() != 1) {
             throw new IllegalArgumentException("Amount must be greater than 0!");
         }
+        BigInteger result;
         if (amount.compareTo(this.amount) >= 0) {
             BigInteger temp = this.amount;
             this.amount = BigInteger.ZERO;
-            return temp;
+            result = temp;
         } else {
             this.amount = this.amount.subtract(amount);
-            return amount;
+            result = amount;
         }
+        if (this.amount.equals(BigInteger.ZERO)) {
+            this.material = null;
+        }
+        return result;
     }
 
     /**
