@@ -42,10 +42,13 @@ public class BarrelInteractListener implements Listener {
                 switch (event.getAction()) {
                     case RIGHT_CLICK_BLOCK:
                         ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
+                        if(heldItem.hasItemMeta()) {
+                            return;
+                        }
                         if(barrel.getMaterial() == null) {
                             barrel.setMaterial(heldItem.getType());
                         }
-                        if(heldItem.getType() != Material.AIR && heldItem.getType() == barrel.getMaterial() && !heldItem.hasItemMeta()) {
+                        if(heldItem.getType() != Material.AIR && heldItem.getType() == barrel.getMaterial()) {
                             BigInteger amountToAdd = new BigInteger(sneaking ? String.valueOf(heldItem.getAmount()) : "1");
                             BigInteger amountAdded = barrel.addItems(amountToAdd);
                             this.plugin.getBarrelProvider().saveBarrel(barrel);
