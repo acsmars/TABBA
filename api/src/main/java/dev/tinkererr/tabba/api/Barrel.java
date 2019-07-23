@@ -1,5 +1,6 @@
 package dev.tinkererr.tabba.api;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 
 import java.math.BigInteger;
@@ -9,28 +10,41 @@ import java.math.BigInteger;
  */
 public abstract class Barrel {
 
+    private Location location;
     private Material material;
     private BigInteger amount;
     private BarrelTier tier;
 
     /**
      * Instantiates a new empty barrel with the default barrel tier.
+     *
+     * @param location The location of the barrel.
      */
-    public Barrel() {
-        this(null, BigInteger.ZERO, BarrelTier.getDefault());
+    public Barrel(Location location) {
+        this(location, null, BigInteger.ZERO, BarrelTier.getDefault());
     }
 
     /**
      * Instantiates a new barrel.
      *
+     * @param location The location of the barrel.
      * @param material The material of the item stored in the barrel.
      * @param amount   The amount of the item currently stored in the barrel.
      * @param tier     The barrel's {@link BarrelTier}.
      */
-    public Barrel(Material material, BigInteger amount, BarrelTier tier) {
+    public Barrel(Location location, Material material, BigInteger amount, BarrelTier tier) {
         this.material = material;
         this.amount = amount;
         this.tier = tier;
+    }
+
+    /**
+     * Returns the location of this barrel in the world.
+     *
+     * @return The barrel's location.
+     */
+    public Location getLocation() {
+        return this.location;
     }
 
     /**
@@ -101,10 +115,10 @@ public abstract class Barrel {
      * @return The actual amount that was taken from this barrel (factoring in how many could be taken).
      */
     public BigInteger takeItems(BigInteger amount) {
-        if(amount.signum() != 1) {
+        if (amount.signum() != 1) {
             throw new IllegalArgumentException("Amount must be greater than 0!");
         }
-        if(amount.compareTo(this.amount) >= 0) {
+        if (amount.compareTo(this.amount) >= 0) {
             BigInteger temp = this.amount;
             this.amount = BigInteger.ZERO;
             return temp;
