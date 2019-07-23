@@ -3,6 +3,7 @@ package dev.tinkererr.tabba;
 import dev.tinkererr.anvil.api.meta.BlockMetaProvider;
 import dev.tinkererr.tabba.api.BarrelProvider;
 import dev.tinkererr.tabba.implemented.AnvilBarrelProvider;
+import dev.tinkererr.tabba.listener.BarrelBreakListener;
 import dev.tinkererr.tabba.listener.BarrelInteractListener;
 import dev.tinkererr.tabba.listener.BarrelPlaceListener;
 import dev.tinkererr.tabba.listener.HopperListener;
@@ -39,6 +40,7 @@ public class TABBA extends JavaPlugin {
                 ServicePriority.Normal);
 
         this.getServer().getPluginManager().registerEvents(new BarrelPlaceListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new BarrelBreakListener(this), this);
         this.getServer().getPluginManager().registerEvents(new BarrelInteractListener(this), this);
         this.getServer().getPluginManager().registerEvents(new HopperListener(this), this);
 
