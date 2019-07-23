@@ -33,6 +33,7 @@ public abstract class Barrel {
      * @param tier     The barrel's {@link BarrelTier}.
      */
     public Barrel(Location location, Material material, BigInteger amount, BarrelTier tier) {
+        this.location = location;
         this.material = material;
         this.amount = amount;
         this.tier = tier;
