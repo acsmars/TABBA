@@ -55,4 +55,13 @@ public class TABBA extends JavaPlugin implements Listener {
     public BlockMetaProvider getAnvil() {
         return this.blockMeta;
     }
+
+    /**
+     * Returns the barrel provider instance which allows getting and saving barrels.
+     *
+     * @return The barrel provider instance.s
+     */
+    public AnvilBarrelProvider getBarrelProvider() {
+        return this.barrelProvider;
+    }
 }
