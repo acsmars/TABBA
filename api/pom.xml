@@ -20,6 +20,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
@@ -27,4 +28,15 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>tinkererr-repo</id>
+            <url>https://repo.tinkererr.dev/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>tinkererr-repo-snapshots</id>
+            <url>https://repo.tinkererr.dev/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
