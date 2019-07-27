@@ -174,9 +174,10 @@ public abstract class Barrel {
                 .append(TextComponent.fromLegacyText(this.tier.getFormattedName()))
                 .append(" || ")
                 .append("Item: ")
-                .append(detailed ? (this.amount.equals(BigInteger.ZERO) ? "" : this.amount.toString())
-                        : this.amount.divide(new BigInteger("64")) + "x64")
-                .append(" ")
+                .append(detailed ? (this.amount.equals(BigInteger.ZERO) ? "" : this.amount.toString() + " ")
+                        : (this.amount.equals(BigInteger.ZERO) ? "" : this.amount.divide(new BigInteger("64")) + "x64" +
+                        (this.amount.mod(new BigInteger("64")).equals(BigInteger.ZERO) ? " " :
+                                "+" + this.amount.mod(new BigInteger("64")) + " ")))
                 .append(this.material == null ? "None" :
                         WordUtils.capitalize(this.material.name().toLowerCase().replaceAll("_", " ")))
                 .append(" || ")
