@@ -1,6 +1,7 @@
 package dev.tinkererr.tabba.listener;
 
 import dev.tinkererr.tabba.TABBA;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
@@ -34,10 +35,11 @@ public class HopperListener implements Listener {
             event.setCancelled(true);
             this.plugin.getBarrelProvider().getBarrel(event.getInitiator().getLocation().add(0, 1, 0)).ifPresent(barrel -> {
                 if (barrel.getMaterial() != null && barrel.getAmount().compareTo(BigInteger.ZERO) > 0) {
+                    Material cached = barrel.getMaterial();
                     BigInteger amountToTake = barrel.takeItems(BigInteger.ONE);
                     this.plugin.getBarrelProvider().saveBarrel(barrel);
                     if (amountToTake.equals(BigInteger.ONE)) {
-                        event.getDestination().addItem(new ItemStack(barrel.getMaterial(), 1));
+                        event.getDestination().addItem(new ItemStack(cached, 1));
                     }
                 }
             });
