@@ -6,7 +6,7 @@
 
     <groupId>dev.tinkererr</groupId>
     <artifactId>tabba</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <modules>
         <module>api</module>
         <module>plugin</module>
@@ -55,4 +55,15 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>tinkererr-repo</id>
+            <url>https://repo.tinkererr.dev/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>tinkererr-repo-snapshots</id>
+            <url>https://repo.tinkererr.dev/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

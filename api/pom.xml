@@ -7,13 +7,14 @@
     <parent>
         <groupId>dev.tinkererr</groupId>
         <artifactId>tabba</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
         <relativePath>../</relativePath>
     </parent>
 
     <artifactId>tabba-api</artifactId>
 
     <name>TABBA API</name>
+    <version>0.1.1</version>
 
     <build>
         <plugins>
