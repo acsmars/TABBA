@@ -38,28 +38,32 @@ public class BarrelInteractListener implements Listener {
                 boolean sneaking = event.getPlayer().isSneaking();
                 switch (event.getAction()) {
                     case RIGHT_CLICK_BLOCK:
-                        event.setUseInteractedBlock(Event.Result.DENY);
-                        event.setUseItemInHand(Event.Result.DENY);
-
                         ItemStack heldItem = event.getPlayer().getInventory().getItemInMainHand();
-                        if(heldItem.hasItemMeta()) {
-                            return;
-                        }
-                        if(barrel.getMaterial() == null) {
-                            barrel.setMaterial(heldItem.getType());
-                        }
-                        if(heldItem.getType() != Material.AIR && heldItem.getType() == barrel.getMaterial()) {
-                            BigInteger amountToAdd = new BigInteger(sneaking ? String.valueOf(heldItem.getAmount()) : "1");
-                            BigInteger amountAdded = barrel.addItems(amountToAdd);
-                            this.plugin.getBarrelProvider().saveBarrel(barrel);
-                            heldItem.setAmount(heldItem.getAmount() - amountAdded.intValueExact());
+                        if (barrel.getMaterial() == null || heldItem.getType() == barrel.getMaterial()) {
+                            event.setUseInteractedBlock(Event.Result.DENY);
+                            event.setUseItemInHand(Event.Result.DENY);
+
+                            if (heldItem.hasItemMeta()) {
+                                return;
+                            }
+                            if (barrel.getMaterial() == null) {
+                                barrel.setMaterial(heldItem.getType());
+                            }
+                            if (heldItem.getType() != Material.AIR && heldItem.getType() == barrel.getMaterial()) {
+                                BigInteger amountToAdd = new BigInteger(sneaking ? String.valueOf(heldItem.getAmount()) : "1");
+                                BigInteger amountAdded = barrel.addItems(amountToAdd);
+                                this.plugin.getBarrelProvider().saveBarrel(barrel);
+                                heldItem.setAmount(heldItem.getAmount() - amountAdded.intValueExact());
+                            }
+                        } else if(!event.getPlayer().isSneaking()) {
+                            event.setUseInteractedBlock(Event.Result.DENY);
                         }
                         break;
                     case LEFT_CLICK_BLOCK:
-                        if(!barrel.getAmount().equals(BigInteger.ZERO)) {
+                        if (!barrel.getAmount().equals(BigInteger.ZERO)) {
                             event.setUseInteractedBlock(Event.Result.DENY);
                             event.setUseItemInHand(Event.Result.DENY);
-                            if(barrel.getMaterial() != null) {
+                            if (barrel.getMaterial() != null) {
                                 Material cachedMaterial = barrel.getMaterial();
                                 BigInteger amountToTake = new BigInteger(sneaking ? "64" : "1");
                                 BigInteger amountTaken = barrel.takeItems(amountToTake);
