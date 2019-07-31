@@ -7,7 +7,7 @@
     <parent>
         <artifactId>tabba</artifactId>
         <groupId>dev.tinkererr</groupId>
-        <version>0.1.2</version>
+        <version>0.1.1</version>
         <relativePath>../</relativePath>
     </parent>
 
