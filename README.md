@@ -4,7 +4,7 @@
   <a href="https://choosealicense.com/licenses/mit/">
     <img src="https://img.shields.io/github/license/lukecarr/tabba.svg?style=for-the-badge" alt="MIT License" />
   </a>
-  <img src="https://img.shields.io/jenkins/build/https/ci.codemc.org/job/tinkererr/job/TABBA?label=Build%20Status&style=for-the-badge" alt="Build Status" />
+  <img src="https://img.shields.io/jenkins/build/https/builds.tinkererr.dev/job/TABBA?label=Build%20Status&style=for-the-badge" alt="Build Status" />
   <a href="https://github.com/lukecarr/TABBA/issues">
     <img src="https://img.shields.io/github/issues/lukecarr/tabba.svg?style=for-the-badge" alt="Issues" />
   </a>
