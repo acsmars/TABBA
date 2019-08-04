@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Got an idea for Neronian? We'd love to hear it!
+about: Got an idea for TABBA? We'd love to hear it!
 title: ''
 labels: enhancement
 assignees: ''
