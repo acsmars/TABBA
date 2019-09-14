@@ -7,8 +7,6 @@ import org.bukkit.block.Barrel;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * This listener class handles when a player places a {@link dev.tinkererr.tabba.api.Barrel}.
@@ -37,11 +35,7 @@ public class BarrelPlaceListener implements Listener {
         if(event.getBlock().getType() == Material.BARREL) {
             this.plugin.getBarrelProvider().saveBarrel(new SimpleBarrel(event.getBlock().getLocation()));
             Barrel barrel = (Barrel) event.getBlock().getState();
-            ItemStack dirt = new ItemStack(Material.DIRT, 1);
-            ItemMeta meta = dirt.getItemMeta();
-            meta.setDisplayName("TABBA Hopper Check");
-            dirt.setItemMeta(meta);
-            barrel.getInventory().addItem(dirt);
+            barrel.getInventory().addItem(SimpleBarrel.getHopperCheck());
         }
     }
 }
