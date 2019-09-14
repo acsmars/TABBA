@@ -85,7 +85,7 @@ public abstract class Barrel {
      * @return True if the barrel is currently full (or over-full), otherwise false.
      */
     public boolean isFull() {
-        return this.amount.compareTo(this.tier.getCapacity()) >= 0;
+        return !this.tier.hasSpace(this.amount);
     }
 
     /**
@@ -108,19 +108,16 @@ public abstract class Barrel {
         if (amount.signum() != 1) {
             throw new IllegalArgumentException("Amount must be greater than 0!");
         }
-        BigInteger maximum = this.tier.getCapacity();
-        if (maximum == null) {
+
+        if (this.tier.hasSpace(this.amount.add(amount))) {
             this.amount = this.amount.add(amount);
             return amount;
+        } else {
+            BigInteger temp = this.amount.add(amount);
+            BigInteger added = amount.subtract(temp.subtract(this.tier.getCapacity()).abs());
+            this.amount = this.tier.getCapacity();
+            return added;
         }
-        if(this.amount.add(amount).compareTo(this.tier.getCapacity()) < 0) {
-            this.amount = this.amount.add(amount);
-            return amount;
-        }
-        BigInteger temp = this.amount.add(amount);
-        BigInteger added = amount.subtract(temp.subtract(this.tier.getCapacity()).abs());
-        this.amount = temp.min(this.tier.getCapacity());
-        return amount;
     }
 
     /**
