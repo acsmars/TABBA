@@ -1,6 +1,11 @@
 # Changelog
 
-## v0.1.1 (27/07/2019
+## v0.1.2 (27/07/2019
+
+### Added
+- Material names ([found here](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html)) can now be placed in the `blacklist.txt` file (one material per line). Any materials in this file will be blacklisted meaning players cannot place them inside barrels.
+
+## v0.1.1 (27/07/2019)
 
 This version is a quick release which fixes an issue regarding hoppers and barrels that was reported [here](https://github.com/lukecarr/TABBA/issues/1). 
 
