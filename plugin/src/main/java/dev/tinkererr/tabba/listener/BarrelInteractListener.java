@@ -1,6 +1,8 @@
 package dev.tinkererr.tabba.listener;
 
 import dev.tinkererr.tabba.TABBA;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -43,12 +45,21 @@ public class BarrelInteractListener implements Listener {
                             event.setUseInteractedBlock(Event.Result.DENY);
                             event.setUseItemInHand(Event.Result.DENY);
 
-                            if (heldItem.hasItemMeta()) {
+                            if (heldItem.hasItemMeta()) { // Prevent item meta
                                 return;
                             }
-                            if (barrel.getMaterial() == null) {
+
+                            if (this.plugin.getBarrelBlacklist().anyMatch(x -> x == heldItem.getType())) { // Blacklist
+                                event.getPlayer().spigot().sendMessage(
+                                        new ComponentBuilder("You cannot place this item in barrels as it's blacklisted!")
+                                                .color(ChatColor.RED).create());
+                                return;
+                            }
+
+                            if (barrel.getMaterial() == null) { // Empty barrel
                                 barrel.setMaterial(heldItem.getType());
                             }
+
                             if (heldItem.getType() != Material.AIR && heldItem.getType() == barrel.getMaterial()) {
                                 BigInteger amountToAdd = new BigInteger(sneaking ? String.valueOf(heldItem.getAmount()) : "1");
                                 BigInteger amountAdded = barrel.addItems(amountToAdd);
