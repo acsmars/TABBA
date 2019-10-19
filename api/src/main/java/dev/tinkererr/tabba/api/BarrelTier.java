@@ -117,6 +117,6 @@ public enum BarrelTier {
      * @return The default tier for new barrels.
      */
     public static BarrelTier getDefault() {
-        return WOOD;
+        return DIAMOND;
     }
 }
